@@ -1,4 +1,4 @@
-public class Sko {
+public class Sko implements Printable{
     String märke;
     String modell;
     String färg;
@@ -45,4 +45,8 @@ public class Sko {
         this.storlek = storlek;
     }
 
+    @Override
+    public String print() {
+        return getMärke() + " " + getModell() + " " + getFärg() + " " + getStorlek();
+    }
 }
