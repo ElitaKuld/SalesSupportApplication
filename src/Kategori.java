@@ -2,6 +2,8 @@ public class Kategori {
     int id; // primärnyckel
     String namn;
 
+    public Kategori(){}
+
     public Kategori(int id, String namn) {
         this.id = id;
         this.namn = namn;

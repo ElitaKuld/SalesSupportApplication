@@ -3,6 +3,8 @@ public class Modell {
     String namn;
     double pris;
 
+    public Modell(){}
+
     public Modell(int id, String namn, double pris) {
         this.id = id;
         this.namn = namn;

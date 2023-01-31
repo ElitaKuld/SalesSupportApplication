@@ -1,39 +1,55 @@
-public class Sko implements Printable{
-    String märke;
-    String modell;
-    String färg;
+public class Sko implements Printable {
+    int id; // primärnyckel
+    Märke märke;
+    Modell modell;
+    Färg färg;
     String storlek;
+    int antal_i_lager;
 
-    public Sko(){}
+    public Sko(){
+        märke = new Märke();
+        modell = new Modell();
+        färg = new Färg();
+    }
 
-    public Sko(String märke, String modell, String färg, String storlek) {
+    public Sko(int id, Märke märke, Modell modell, Färg färg, String storlek, int antal_i_lager) {
+        this.id = id;
         this.märke = märke;
         this.modell = modell;
         this.färg = färg;
         this.storlek = storlek;
+        this.antal_i_lager = antal_i_lager;
     }
 
-    public String getMärke() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Märke getMärke() {
         return märke;
     }
 
-    public void setMärke(String märke) {
+    public void setMärke(Märke märke) {
         this.märke = märke;
     }
 
-    public String getModell() {
+    public Modell getModell() {
         return modell;
     }
 
-    public void setModell(String modell) {
+    public void setModell(Modell modell) {
         this.modell = modell;
     }
 
-    public String getFärg() {
+    public Färg getFärg() {
         return färg;
     }
 
-    public void setFärg(String färg) {
+    public void setFärg(Färg färg) {
         this.färg = färg;
     }
 
@@ -45,8 +61,16 @@ public class Sko implements Printable{
         this.storlek = storlek;
     }
 
+    public int getAntal_i_lager() {
+        return antal_i_lager;
+    }
+
+    public void setAntal_i_lager(int antal_i_lager) {
+        this.antal_i_lager = antal_i_lager;
+    }
+
     @Override
     public String print() {
-        return getMärke() + " " + getModell() + " " + getFärg() + " " + getStorlek();
+        return getMärke().getNamn() + " " + getModell().getNamn() + " " + getFärg().getNamn() + " " + getStorlek();
     }
 }

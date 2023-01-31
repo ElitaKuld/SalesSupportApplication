@@ -2,6 +2,8 @@ public class Färg {
     int id; // primärnyckel
     String namn;
 
+    public Färg(){}
+
     public Färg(int id, String namn) {
         this.id = id;
         this.namn = namn;

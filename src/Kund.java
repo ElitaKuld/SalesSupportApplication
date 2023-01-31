@@ -1,19 +1,31 @@
-public class Kund implements Printable{
+public class Kund implements Printable {
 
+    int id; // primärnyckel
     String namn;
     String adress;
     String ort;
     String mobilnummer;
     String epostadress;
+    String lösenord;
 
     public Kund(){}
 
-    public Kund(String namn, String adress, String ort, String mobilnummer, String epostadress) {
+    public Kund(int id, String namn, String adress, String ort, String mobilnummer, String epostadress, String lösenord) {
+        this.id = id;
         this.namn = namn;
         this.adress = adress;
         this.ort = ort;
         this.mobilnummer = mobilnummer;
         this.epostadress = epostadress;
+        this.lösenord = lösenord;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNamn() {
@@ -54,6 +66,14 @@ public class Kund implements Printable{
 
     public void setEpostadress(String epostadress) {
         this.epostadress = epostadress;
+    }
+
+    public String getLösenord() {
+        return lösenord;
+    }
+
+    public void setLösenord(String lösenord) {
+        this.lösenord = lösenord;
     }
 
     @Override

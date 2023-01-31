@@ -2,6 +2,8 @@ public class Märke {
     int id; // primärnyckel
     String namn;
 
+    public Märke(){}
+
     public Märke(int id, String namn) {
         this.id = id;
         this.namn = namn;

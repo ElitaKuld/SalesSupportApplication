@@ -1,27 +1,31 @@
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Beställning implements Printable{
-    int id;
+    int ordernummer; // primärnyckel
     Kund kund;
-    List<BeställdVara> beställdaVaror = new ArrayList<>();
+    List<BeställdVara> beställdaVaror;
     double summa;
 
     public Beställning() {
+        kund = new Kund();
+        beställdaVaror = new ArrayList<>();
     }
 
     public Beställning(int id, Kund kund, double summa) {
-        this.id = id;
+        this.ordernummer = id;
         this.kund = kund;
+        beställdaVaror = new ArrayList<>();
         this.summa = summa;
     }
 
     public int getId() {
-        return id;
+        return ordernummer;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.ordernummer = id;
     }
 
     public Kund getKund() {
@@ -46,6 +50,6 @@ public class Beställning implements Printable{
 
     @Override
     public String print() {
-        return null;
+        return getId() + " " + getKund().print() + " " + getBeställdaVaror() + " " + getSumma();
     }
 }
