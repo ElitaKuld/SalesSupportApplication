@@ -1,6 +1,6 @@
 public class Färg {
-    int id; // primärnyckel
-    String namn;
+    private int id; // primärnyckel
+    private String namn;
 
     public Färg(){}
 

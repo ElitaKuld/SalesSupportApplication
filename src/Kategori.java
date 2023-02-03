@@ -1,6 +1,6 @@
 public class Kategori {
-    int id; // primärnyckel
-    String namn;
+    private int id; // primärnyckel
+    private String namn;
 
     public Kategori(){}
 

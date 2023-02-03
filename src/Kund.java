@@ -1,12 +1,12 @@
 public class Kund implements Printable {
 
-    int id; // primärnyckel
-    String namn;
-    String adress;
-    String ort;
-    String mobilnummer;
-    String epostadress;
-    String lösenord;
+    private int id; // primärnyckel
+    private String namn;
+    private String adress;
+    private String ort;
+    private String mobilnummer;
+    private String epostadress;
+    private String lösenord;
 
     public Kund(){}
 
@@ -77,7 +77,7 @@ public class Kund implements Printable {
     }
 
     @Override
-    public String print() {
-        return namn + " " + adress + " " + ort + " " + mobilnummer + " " + epostadress;
+    public String getData() {
+        return id + " " + namn + " " + adress + " " + ort + " " + mobilnummer + " " + epostadress + " " + lösenord;
     }
 }

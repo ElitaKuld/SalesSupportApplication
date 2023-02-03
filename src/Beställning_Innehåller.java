@@ -1,9 +1,9 @@
 public class Beställning_Innehåller implements Printable{
-    int id; // primärnyckel
-    Beställning beställning;
-    Sko sko;
-    int antal;
-    double delsumma;
+    private int id; // primärnyckel
+    private Beställning beställning;
+    private Sko sko;
+    private int antal;
+    private double delsumma;
 
     public Beställning_Innehåller(){
         beställning = new Beställning();
@@ -58,7 +58,7 @@ public class Beställning_Innehåller implements Printable{
     }
 
     @Override
-    public String print() {
+    public String getData() {
         return getBeställning().getId() + " " + getSko().getModell().getNamn() +
                 " " + getSko().getModell().getPris() + " " + getSko().getMärke().getNamn() + " " + getSko().getFärg().getNamn() +
                 " " + getSko().getStorlek() + " " + getAntal() + " " + getDelsumma();

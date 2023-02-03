@@ -1,7 +1,12 @@
 public class Sko_ingår_i_kategori {
-    int id;
-    Sko sko;
-    Kategori kategori;
+    private int id;
+    private Sko sko;
+    private Kategori kategori;
+
+    public Sko_ingår_i_kategori() {
+        sko = new Sko();
+        kategori = new Kategori();
+    }
 
     public Sko_ingår_i_kategori(int id, Sko sko, Kategori kategori) {
         this.id = id;

@@ -1,10 +1,10 @@
 public class Sko implements Printable {
-    int id; // primärnyckel
-    Märke märke;
-    Modell modell;
-    Färg färg;
-    String storlek;
-    int antal_i_lager;
+    private int id; // primärnyckel
+    private Märke märke;
+    private Modell modell;
+    private Färg färg;
+    private String storlek;
+    private int antal_i_lager;
 
     public Sko(){
         märke = new Märke();
@@ -70,7 +70,8 @@ public class Sko implements Printable {
     }
 
     @Override
-    public String print() {
-        return getMärke().getNamn() + " " + getModell().getNamn() + " " + getFärg().getNamn() + " " + getStorlek();
+    public String getData() {
+        return "Märke: " + getMärke().getNamn() + ", modell: " + getModell().getNamn() + ", färg: " + getFärg().getNamn() + ", storlek: "
+                + getStorlek();
     }
 }

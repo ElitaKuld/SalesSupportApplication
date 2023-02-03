@@ -1,7 +1,7 @@
 public class Modell {
-    int id; // primärnyckel
-    String namn;
-    double pris;
+    private int id; // primärnyckel
+    private String namn;
+    private double pris;
 
     public Modell(){}
 

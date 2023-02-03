@@ -100,4 +100,123 @@ public class Repository {
         }
         return beställningInnehållerLista;
     }
+
+    List<Kund> getAllCustomers() throws IOException {
+
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("src/Settings.properties"));
+        List<Kund> kundLista = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(properties.getProperty("connectionString"), properties.getProperty("name"),
+                properties.getProperty("password"));
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(
+                     "select Kund.id, Kund.namn, Kund.adress, Kund.ort, Kund.mobilnummer, Kund.epostadress, Kund.lösenord " +
+                             "from Kund;")
+        ) {
+
+            while (resultSet.next()) {
+                Kund kund = new Kund();
+
+                kund.setId(resultSet.getInt("Kund.id"));
+                kund.setNamn(resultSet.getString("Kund.namn"));
+                kund.setAdress(resultSet.getString("Kund.adress"));
+                kund.setOrt(resultSet.getString("Kund.ort"));
+                kund.setMobilnummer(resultSet.getString("Kund.mobilnummer"));
+                kund.setEpostadress(resultSet.getString("Kund.epostadress"));
+                kund.setLösenord(resultSet.getString("Kund.lösenord"));
+
+                kundLista.add(kund);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return kundLista;
+    }
+
+    List<Sko_ingår_i_kategori> getAllCategoriesWithRespectiveShoes() throws IOException {
+
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("src/Settings.properties"));
+        List<Sko_ingår_i_kategori> kategoriMedSkorLista = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(properties.getProperty("connectionString"), properties.getProperty("name"),
+                properties.getProperty("password"));
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(
+                     "select Sko_ingår_i_kategori.id, " +
+                             "Sko.id, Sko.storlek, Sko.antal_i_lager, " +
+                             "Märke.id, Märke.namn, " +
+                             "Modell.id, Modell.namn, Modell.pris, " +
+                             "Färg.id, Färg.namn, " +
+                             "Kategori.id, Kategori.namn " +
+                             "from Sko_ingår_i_kategori, Sko, Kategori, Märke, Modell, Färg " +
+                             "where Sko_ingår_i_kategori.kategoriId=Kategori.id and Sko_ingår_i_kategori.skoId=Sko.id " +
+                             "and sko.märkeId=Märke.id and sko.modell_Id=Modell.id and sko.färgId=Färg.id")
+        ) {
+
+            while (resultSet.next()) {
+                Sko_ingår_i_kategori skoIngårIKategori = new Sko_ingår_i_kategori();
+                Sko sko = new Sko();
+                Kategori kategori = new Kategori();
+
+                skoIngårIKategori.setId(resultSet.getInt("Sko_ingår_i_kategori.id"));
+
+                sko.setId(resultSet.getInt("Sko.id"));
+                sko.setStorlek(resultSet.getString("Sko.storlek"));
+                sko.setAntal_i_lager(resultSet.getInt("Sko.antal_i_lager"));
+                sko.getMärke().setId(resultSet.getInt("Märke.id"));
+                sko.getMärke().setNamn(resultSet.getString("Märke.namn"));
+                sko.getModell().setId(resultSet.getInt("Modell.id"));
+                sko.getModell().setNamn(resultSet.getString("Modell.namn"));
+                sko.getModell().setPris(resultSet.getDouble("Modell.pris"));
+                sko.getFärg().setId(resultSet.getInt("Färg.id"));
+                sko.getFärg().setNamn(resultSet.getString("Färg.namn"));
+
+                skoIngårIKategori.setSko(sko);
+
+                kategori.setId(resultSet.getInt("Kategori.id"));
+                kategori.setNamn(resultSet.getString("Kategori.namn"));
+
+                skoIngårIKategori.setKategori(kategori);
+
+                kategoriMedSkorLista.add(skoIngårIKategori);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return kategoriMedSkorLista;
+    }
+
+    void addToCart(int customerId, int orderId, int productId, int amount) throws IOException {
+
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("src/Settings.properties"));
+
+        try (Connection connection = DriverManager.getConnection(properties.getProperty("connectionString"), properties.getProperty("name"),
+                properties.getProperty("password"));
+
+             CallableStatement callableStatement = connection.prepareCall("call addToCart (?,?,?,?,?)");
+
+        ) {
+            callableStatement.setInt(1, customerId);
+            callableStatement.setInt(2, orderId);
+            callableStatement.setInt(3, productId);
+            callableStatement.setInt(4, amount);
+            callableStatement.registerOutParameter(5, Types.DOUBLE);
+
+            callableStatement.executeQuery();
+            double totals = callableStatement.getDouble(5);
+
+            System.out.println("Din beställning är nu genomförd. Summa att betala: " + totals +
+                    "\nVi har skickat en bekräftelse till din email-adress." +
+                    "\nTack för att du har handlat hos oss!");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getErrorCode());
+        }
+    }
 }

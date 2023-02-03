@@ -38,7 +38,7 @@ public class BeställdVara implements Printable{
 
 
     @Override
-    public String print() {
+    public String getData() {
         return antal + " " + sko.getMärke().getNamn() + " " + sko.getModell().getNamn() + " " +
                 sko.getFärg().getNamn() + " " + sko.getStorlek() + " " + delsumma;
     }

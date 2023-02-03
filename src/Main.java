@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
+/*
         Databas databas = new Databas();
         List<Beställning> listaPåAllaBeställningar = databas.getOrdersWithRespectiveContent();
         Scanner scanner = new Scanner(System.in);
@@ -12,7 +12,7 @@ public class Main {
         System.out.println();
 
         for (Beställning beställning:listaPåAllaBeställningar){
-            System.out.println(beställning.print());
+            System.out.println(beställning.getData());
         }
 
         System.out.println();
@@ -27,7 +27,7 @@ public class Main {
                 "beställt för. Skriv ut varje kunds namn och summa.\n" +
                 "4 - En rapport som listar beställningsvärde per ort. Skriv ut orternas namn och summa.\n" +
                 "5 - En topplista över de mest sålda produkterna som listar varje modell och hur många ex som \n" +
-                "har sålts av den modellen. Skriv ut namn på modellen och hur många ex som sålts.");
+                "har sålts av den modellen. Skriv ut namn på modellen och hur många ex som sålts.");*/
 
     }
 }

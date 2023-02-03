@@ -5,15 +5,17 @@ public class Databas {
     Repository repository;
     List<Beställning> beställningsLista;
     List<Beställning_Innehåller> beställningInnehållerLista;
+    List<Kund> allCustomersList;
 
 
-    public Databas() throws IOException {
+    public Databas() {
         repository = new Repository();
-        beställningsLista = repository.getAllOrders();
-        beställningInnehållerLista = repository.getOrdersContent();
     }
 
-    public List<Beställning> getOrdersWithRespectiveContent(){
+    /*
+    public List<Beställning> getOrdersWithRespectiveContent() throws IOException {
+        beställningsLista = repository.getAllOrders();
+        beställningInnehållerLista = repository.getOrdersContent();
         for (int i = 0; i < beställningsLista.size(); i++){
             for(Beställning_Innehåller innehåll : beställningInnehållerLista){
                 if (beställningsLista.get(i).getId() == innehåll.getBeställning().getId()){
@@ -23,10 +25,10 @@ public class Databas {
                     beställdVara.setDelsumma(innehåll.getDelsumma());
                     beställningsLista.get(i).getBeställdaVaror().add(beställdVara);
                     System.out.println("Beställd vara lagd in i beställning nummer " + beställningsLista.get(i).getId());
-                    System.out.println(beställdVara.print());
+                    System.out.println(beställdVara.getData());
                 }
             }
         }
         return beställningsLista;
-    }
+    }*/
 }
