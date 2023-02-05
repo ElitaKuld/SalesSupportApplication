@@ -1,3 +1,8 @@
+package Tabeller;
+
+import Tabeller.Kategori;
+import Tabeller.Sko;
+
 public class Sko_ingår_i_kategori {
     private int id;
     private Sko sko;

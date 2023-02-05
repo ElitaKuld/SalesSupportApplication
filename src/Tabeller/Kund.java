@@ -1,3 +1,5 @@
+package Tabeller;
+
 import java.util.Objects;
 
 public class Kund implements Printable {

@@ -1,3 +1,9 @@
+import Tabeller.Beställning;
+import Tabeller.Kund;
+import Tabeller.Sko;
+import Tabeller.Sko_ingår_i_kategori;
+
+import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -8,8 +14,8 @@ public class LäggaEnBeställning {
         final Scanner scanner = new Scanner(System.in);
         final List<Kund> allCustomersList = repository.getAllCustomers();
 
-        allCustomersList.stream().forEach(customer -> System.out.println(customer.getData()));
-        System.out.println();
+        // allCustomersList.forEach(customer -> System.out.println(customer.getData()));
+        // System.out.println();
 
         System.out.println("Hej och välkommen till vår webbshop!\n" +
                 "För att lägga en beställning vänligen ange ditt namn och efternamn:");
@@ -31,32 +37,46 @@ public class LäggaEnBeställning {
             System.exit(0);
         }
 
-        System.out.println("Vilken skokategori är du intresserad av? Ange siffran som motsvarar önskade kategorin:\n" +
-                "Damskor : 1\nHerrskor : 2\nBarnskor : 3\nSportskor : 4\nPromenadskor : 5\nSandaler : 6");
+        System.out.println("""
+                Vilken skokategori är du intresserad av? Ange siffran som motsvarar önskade kategorin:
+                Damskor : 1
+                Herrskor : 2
+                Barnskor : 3
+                Sportskor : 4
+                Promenadskor : 5
+                Sandaler : 6""");
         final String svarKategori = scanner.nextLine().trim();
         System.out.println();
         final String category;
-        if (svarKategori.equals("1")) {
-            category = "Damskor";
-            System.out.println("Du har valt : Damskor");
-        } else if (svarKategori.equals("2")) {
-            category = "Herrskor";
-            System.out.println("Du har valt : Herrskor");
-        } else if (svarKategori.equals("3")) {
-            category = "Barnskor";
-            System.out.println("Du har valt : Barnskor");
-        } else if (svarKategori.equals("4")) {
-            category = "Sportskor";
-            System.out.println("Du har valt : Sportskor");
-        } else if (svarKategori.equals("5")) {
-            category = "Promenadskor";
-            System.out.println("Du har valt : Promenadskor");
-        } else if (svarKategori.equals("6")) {
-            category = "Sandaler";
-            System.out.println("Du har valt : Sandaler");
-        } else {
-            category = null;
-            System.out.println("Okänd kategori");
+        switch (svarKategori) {
+            case "1" -> {
+                category = "Damskor";
+                System.out.println("Du har valt : Damskor");
+            }
+            case "2" -> {
+                category = "Herrskor";
+                System.out.println("Du har valt : Herrskor");
+            }
+            case "3" -> {
+                category = "Barnskor";
+                System.out.println("Du har valt : Barnskor");
+            }
+            case "4" -> {
+                category = "Sportskor";
+                System.out.println("Du har valt : Sportskor");
+            }
+            case "5" -> {
+                category = "Promenadskor";
+                System.out.println("Du har valt : Promenadskor");
+            }
+            case "6" -> {
+                category = "Sandaler";
+                System.out.println("Du har valt : Sandaler");
+            }
+            default -> {
+                category = null;
+                System.out.println("Okänd kategori");
+            }
         }
 
         // skapa en lista med alla skor tillhörande någon kategori
@@ -68,7 +88,7 @@ public class LäggaEnBeställning {
                 filter(s -> s.getKategori().getNamn().equalsIgnoreCase(category)).toList();
 
         System.out.println("Vilket av dem nedanstående märkena skulle du vilja beställa?");
-        relevantCategoryShoes.stream().map(s -> s.getSko().getMärke().getNamn()).distinct().forEach(namn -> System.out.println(namn));
+        relevantCategoryShoes.stream().map(s -> s.getSko().getMärke().getNamn()).distinct().forEach(System.out::println);
         final String brand = scanner.nextLine().trim();
         System.out.println();
 
@@ -78,7 +98,7 @@ public class LäggaEnBeställning {
 
         System.out.println("Vilken modell skulle du vilja beställa?");
         relevantBrandShoes.stream().map(s -> s.getSko().getModell().getNamn()).distinct().
-                forEach(namn -> System.out.println(namn));
+                forEach(System.out::println);
         final String model = scanner.nextLine().trim();
         System.out.println();
 
@@ -88,7 +108,7 @@ public class LäggaEnBeställning {
 
         System.out.println("Vilken färg skulle du vilja beställa?");
         relevantModelShoes.stream().map(s -> s.getSko().getFärg().getNamn()).distinct().
-                forEach(namn -> System.out.println(namn));
+                forEach(System.out::println);
         final String colour = scanner.nextLine().trim();
         System.out.println();
 
@@ -97,7 +117,7 @@ public class LäggaEnBeställning {
                 filter(s -> s.getSko().getFärg().getNamn().equalsIgnoreCase(colour)).toList();
 
         System.out.println("Vilken storlek skulle du vilja beställa?");
-        relevantColourShoes.stream().map(s -> s.getSko().getStorlek()).forEach(storlek -> System.out.println(storlek));
+        relevantColourShoes.stream().map(s -> s.getSko().getStorlek()).forEach(System.out::println);
         final String size = scanner.nextLine().trim();
         System.out.println();
 

@@ -1,3 +1,5 @@
+package Tabeller;
+
 public class Färg {
     private int id; // primärnyckel
     private String namn;

@@ -1,4 +1,8 @@
-public class Beställning_Innehåller implements Printable{
+package Tabeller;
+
+import Tabeller.Beställning;
+
+public class Beställning_Innehåller implements Printable {
     private int id; // primärnyckel
     private Beställning beställning;
     private Sko sko;

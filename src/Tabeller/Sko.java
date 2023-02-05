@@ -1,3 +1,7 @@
+package Tabeller;
+
+import java.util.Objects;
+
 public class Sko implements Printable {
     private int id; // primärnyckel
     private Märke märke;
@@ -67,6 +71,26 @@ public class Sko implements Printable {
 
     public void setAntal_i_lager(int antal_i_lager) {
         this.antal_i_lager = antal_i_lager;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Sko other = (Sko) obj;
+        return Objects.equals(id, id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

@@ -1,3 +1,5 @@
+package Tabeller;
+
 public class Märke {
     private int id; // primärnyckel
     private String namn;
