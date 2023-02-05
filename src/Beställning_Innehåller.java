@@ -59,8 +59,6 @@ public class Beställning_Innehåller implements Printable{
 
     @Override
     public String getData() {
-        return getBeställning().getId() + " " + getSko().getModell().getNamn() +
-                " " + getSko().getModell().getPris() + " " + getSko().getMärke().getNamn() + " " + getSko().getFärg().getNamn() +
-                " " + getSko().getStorlek() + " " + getAntal() + " " + getDelsumma();
+        return getId() + " " + getBeställning().getData() + " " + getSko().getData() + " " + getAntal() + " " + getDelsumma();
     }
 }

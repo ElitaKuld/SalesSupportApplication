@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class LäggaEnBeställning {
     public static void main(String[] args) throws IOException {
-        LäggaEnBeställning lägga = new LäggaEnBeställning();
-        final Databas database = new Databas();
         final Repository repository = new Repository();
         final Scanner scanner = new Scanner(System.in);
         final List<Kund> allCustomersList = repository.getAllCustomers();

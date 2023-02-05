@@ -1,3 +1,4 @@
+import java.util.Objects;
 
 public class Beställning implements Printable {
     private int ordernummer; // primärnyckel
@@ -5,7 +6,6 @@ public class Beställning implements Printable {
     private double summa;
 
     public Beställning() {
-        kund = new Kund();
     }
 
     public Beställning(int id, Kund kund, double summa) {
@@ -36,6 +36,26 @@ public class Beställning implements Printable {
 
     public void setSumma(double summa) {
         this.summa = summa;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Beställning other = (Beställning) obj;
+        return Objects.equals(ordernummer, ordernummer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ordernummer);
     }
 
     @Override

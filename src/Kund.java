@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Kund implements Printable {
 
     private int id; // primärnyckel
@@ -74,6 +76,26 @@ public class Kund implements Printable {
 
     public void setLösenord(String lösenord) {
         this.lösenord = lösenord;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Kund other = (Kund) obj;
+        return Objects.equals(id, id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

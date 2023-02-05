@@ -50,7 +50,7 @@ public class Repository {
         return beställningsLista;
     }
 
-    List<Beställning_Innehåller> getOrdersContent() throws IOException {
+    List<Beställning_Innehåller> getAllOrdersAndTheirContent() throws IOException {
 
         Properties properties = new Properties();
         properties.load(new FileInputStream("src/Settings.properties"));
@@ -60,24 +60,42 @@ public class Repository {
                 properties.getProperty("password"));
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(
-                     "select Beställning_Innehåller.id, Beställning_Innehåller.beställningId, " +
-                             "Beställning_Innehåller.antal, beställning_innehåller.delsumma," +
-                             "Sko.id, Sko.storlek, Sko.antal_i_lager," +
-                             "Märke.id, Märke.namn, " +
-                             "Modell.id, Modell.namn, Modell.pris," +
-                             "Färg.id, Färg.namn " +
-                             "from Beställning_Innehåller, Sko, Märke, Modell, Färg where Sko.id=beställning_innehåller.SkoId " +
-                             "and Sko.färgId=Färg.id and Sko.modell_Id=Modell.id and Sko.märkeId=Märke.id")
+                     "select Beställning_Innehåller.id, Beställning_innehåller.antal, beställning_innehåller.delsumma,\n" +
+                             "Beställning.ordernummer, Beställning.summa, \n" +
+                             "Kund.id, Kund.namn, Kund.adress, Kund.ort, Kund.mobilnummer, Kund.epostadress, Kund.lösenord,\n" +
+                             "Sko.id, Sko.storlek, Sko.antal_i_lager,\n" +
+                             "Märke.id, Märke.namn,\n" +
+                             "Modell.id, Modell.namn, Modell.pris,\n" +
+                             "Färg.id, Färg.namn\n" +
+                             "from Beställning_Innehåller, Beställning, Kund, Sko, Märke, Modell, Färg\n" +
+                             "where Beställning_Innehåller.beställningId=Beställning.ordernummer and Beställning.kundId=Kund.id " +
+                             "and Beställning_Innehåller.skoId=Sko.id \n" +
+                             "and Sko.märkeId=Märke.id and Sko.modell_Id=Modell.id and Sko.färgId=Färg.id;")
         ) {
 
             while (resultSet.next()) {
                 Beställning_Innehåller beställningInnehåller = new Beställning_Innehåller();
+                Beställning beställning = new Beställning();
+                Kund kund = new Kund();
                 Sko sko = new Sko();
 
                 beställningInnehåller.setId(resultSet.getInt("Beställning_Innehåller.id"));
-                beställningInnehåller.getBeställning().setId(resultSet.getInt("Beställning_Innehåller.beställningId"));
                 beställningInnehåller.setAntal(resultSet.getInt("Beställning_Innehåller.antal"));
                 beställningInnehåller.setDelsumma(resultSet.getDouble("beställning_innehåller.delsumma"));
+
+                beställning.setId(resultSet.getInt("Beställning.ordernummer"));
+                beställning.setSumma(resultSet.getDouble("Beställning.summa"));
+
+                kund.setId(resultSet.getInt("Kund.id"));
+                kund.setNamn(resultSet.getString("Kund.namn"));
+                kund.setAdress(resultSet.getString("Kund.adress"));
+                kund.setOrt(resultSet.getString("Kund.ort"));
+                kund.setMobilnummer(resultSet.getString("Kund.mobilnummer"));
+                kund.setEpostadress(resultSet.getString("Kund.epostadress"));
+                kund.setLösenord(resultSet.getString("Kund.lösenord"));
+
+                beställning.setKund(kund);
+                beställningInnehåller.setBeställning(beställning);
 
                 sko.setId(resultSet.getInt("Sko.id"));
                 sko.setStorlek(resultSet.getString("Sko.storlek"));
