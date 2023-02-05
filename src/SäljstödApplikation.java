@@ -191,9 +191,20 @@ public class SäljstödApplikation {
                 // En topplista över de mest sålda produkterna som listar varje modell och hur många ex som
                 // har sålts av den modellen. Skriv ut namn på modellen och hur många ex som sålts.
             } else if (reportNumber == 5) {
-                System.out.println("Topp 10 sålda produkter:");
-                System.out.println("Work in progress...");
+                System.out.println("Topplista över sålda produkter:");
 
+                // grouping by model
+                final Map<Modell, List<Beställning_Innehåller>> groupedByModelMap = allOrdersAndTheirContentList.stream().
+                        collect(Collectors.groupingBy(beställningInnehåller -> beställningInnehåller.getSko().getModell()));
+
+                //groupedByModelMap.forEach((k, v) -> System.out.println(k.getNamn() + " : " + v));
+
+                // creating new map with models and respective pairs of shoes sold
+                final Map<String, Integer> groupedByModelNameMap = new HashMap<>();
+                groupedByModelMap.forEach((k, v) -> groupedByModelNameMap.put(k.getNamn(), v.stream().mapToInt(Beställning_Innehåller::getAntal).sum()));
+
+                groupedByModelNameMap.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).
+                        forEach(System.out::println);
 
             } else {
                 System.out.println("Denna angivna siffra motsvarar inte någon rapport.");
