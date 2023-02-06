@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 public class SäljstödApplikation {
 
-    final ProductSearcherInterface lookingForColour = (order, word) -> order.getSko().getFärg().getNamn().equals(word);
-    final ProductSearcherInterface lookingForSize = (order, word) -> order.getSko().getStorlek().equals(word);
-    final ProductSearcherInterface lookingForBrand = (order, word) -> order.getSko().getMärke().getNamn().equals(word);
+    final ProductSearcherInterface lookingForColour = (order, word) -> order.getSko().getFärg().getNamn().equalsIgnoreCase(word);
+    final ProductSearcherInterface lookingForSize = (order, word) -> order.getSko().getStorlek().equalsIgnoreCase(word);
+    final ProductSearcherInterface lookingForBrand = (order, word) -> order.getSko().getMärke().getNamn().equalsIgnoreCase(word);
 
     public void searchForProduct(String wordSearchParameter, ProductSearcherInterface psi, List<Beställning_Innehåller> allOrdersAndTheirContentList) {
         allOrdersAndTheirContentList.stream().filter(b -> psi.search(b, wordSearchParameter)).
@@ -74,7 +74,7 @@ public class SäljstödApplikation {
                     final List<String> allColoursList = allOrdersAndTheirContentList.stream().map(Beställning_Innehåller::getSko).map(Sko::getFärg).
                             map(Färg::getNamn).distinct().sorted(collator).toList();
                     allColoursList.forEach(System.out::println);
-                    final String colour = scanner.nextLine().trim();
+                    final String colour = scanner.nextLine().trim().toLowerCase();
                     System.out.println();
 
                     if (allColoursList.stream().noneMatch(färg -> färg.equals(colour))) { // opposite to anyMatch
@@ -91,7 +91,7 @@ public class SäljstödApplikation {
                     final List<String> allSizesList = allOrdersAndTheirContentList.stream().map(Beställning_Innehåller::getSko).map(Sko::getStorlek).
                             distinct().sorted().toList();
                     allSizesList.forEach(System.out::println);
-                    final String size = scanner.nextLine();
+                    final String size = scanner.nextLine().trim();
                     System.out.println();
 
                     if (allSizesList.stream().noneMatch(storlek -> storlek.equals(size))) { // opposite to anyMatch
@@ -107,7 +107,7 @@ public class SäljstödApplikation {
                     final List<String> allBrandsList = allOrdersAndTheirContentList.stream().map(Beställning_Innehåller::getSko).map(Sko::getMärke).
                             map(Märke::getNamn).sorted(collator).distinct().toList();
                     allBrandsList.forEach(System.out::println);
-                    final String brand = scanner.nextLine();
+                    final String brand = scanner.nextLine().trim();
                     System.out.println();
 
                     if (allBrandsList.stream().noneMatch(märke -> märke.equals(brand))) { // opposite to anyMatch
@@ -126,7 +126,7 @@ public class SäljstödApplikation {
 
                 // En rapport som listar alla kunder och hur många ordrar varje kund har lagt. Skriv ut namn och sammanlagda antalet ordrar för varje kund.
             } else if (reportNumber == 2) {
-                System.out.println("Så många ordrar har varit lagda av varje kund:");
+                System.out.println("Så många ordrar har varit gjorda av varje kund:");
 
                 final List<Beställning> allOrdersList = allOrdersAndTheirContentList.stream().
                         map(Beställning_Innehåller::getBeställning).distinct().toList();
@@ -191,19 +191,17 @@ public class SäljstödApplikation {
                 // En topplista över de mest sålda produkterna som listar varje modell och hur många ex som
                 // har sålts av den modellen. Skriv ut namn på modellen och hur många ex som sålts.
             } else if (reportNumber == 5) {
-                System.out.println("Topplista över sålda produkter:");
+                System.out.println("Topp 5 sålda produkter:");
 
                 // grouping by model
                 final Map<Modell, List<Beställning_Innehåller>> groupedByModelMap = allOrdersAndTheirContentList.stream().
                         collect(Collectors.groupingBy(beställningInnehåller -> beställningInnehåller.getSko().getModell()));
 
-                //groupedByModelMap.forEach((k, v) -> System.out.println(k.getNamn() + " : " + v));
-
                 // creating new map with models and respective pairs of shoes sold
                 final Map<String, Integer> groupedByModelNameMap = new HashMap<>();
                 groupedByModelMap.forEach((k, v) -> groupedByModelNameMap.put(k.getNamn(), v.stream().mapToInt(Beställning_Innehåller::getAntal).sum()));
 
-                groupedByModelNameMap.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).
+                groupedByModelNameMap.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(5).
                         forEach(System.out::println);
 
             } else {
